@@ -49,7 +49,7 @@ def create():
     user = UserModel(data)
     user.save()
     ser_data = user_schema.dump(user)
-    token = Auth.generate_token(ser_data.get('id'))
+    token = Auth.generate_token(ser_data[0].get('id'))
     return custom_response({'jwt_token': token}, 201)
 
 # UPDATE user 
@@ -88,7 +88,7 @@ def login():
     if not user.check_hash(req_data.get('password')):
         return custom_response({'error': 'invalid credentials'})
     ser_data = user_schema.dump(user)
-    token = Auth.generate_token(ser_data.get('id'))
+    token = Auth.generate_token(ser_data[0].get('id'))
     return custom_response({'jwt_token': token}, 200)
 
 # TODO: Fully understand how Auth works
