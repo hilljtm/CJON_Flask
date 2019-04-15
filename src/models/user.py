@@ -14,6 +14,8 @@ class UserModel(db.Model):
     password = db.Column(db.String(128), nullable=False)
 
     def __init__(self, data):
+        print(type(data))
+        print(data)
         self.first_name = data.get('first_name')
         self.last_name = data.get('last_name')
         self.email = data.get('email')
