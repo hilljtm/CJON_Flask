@@ -35,11 +35,12 @@ def create():
 
     # Pass in the dictionary and load into a user schema
     data = user_schema.load(req_data)
+    print(data)
     # if error:
     #     return custom_response(error, 400)
 
     # Check if User already exists in the db
-    user_in_db = UserModel.get_by_email(data.get('email'))
+    user_in_db = UserModel.get_by_email(req_data.get('email'))
     if user_in_db:
         message = {'error': 'User already exists, please supply another email'}
         return custom_response(message, 400)
@@ -78,13 +79,13 @@ def login():
     '''
     req_data = request.get_json()
     data = user_schema.load(req_data)
-    if not data.get('email') or not data.get('password'):
+    if not req_data.get('email') or not req_data.get('password'):
         return custom_response({'error': 'Email and Password required to login'})
-    user = UserModel.get_by_email(data.get('email'))
+    user = UserModel.get_by_email(req_data.get('email'))
     if not user:
         return custom_response({'error': 'invalid credentials'}, 400)
 
-    if not user.check_hash(data.get('password')):
+    if not user.check_hash(req_data.get('password')):
         return custom_response({'error': 'invalid credentials'})
     ser_data = user_schema.dump(user)
     token = Auth.generate_token(ser_data.get('id'))
