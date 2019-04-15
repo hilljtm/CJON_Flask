@@ -16,7 +16,10 @@ class UserModel(db.Model):
     def __init__(self, data):
         print(type(data))
         print(data)
-        self.first_name = data.get('first_name')
+        self.first_name = data[0].get('first_name')
+        print(data[0].get('first_name'))
+        print(data[0].get('first_name'))
+        print(data[0].get('first_name'))
         self.last_name = data.get('last_name')
         self.email = data.get('email')
         self.password = self._generate_hash(data.get('password'))
