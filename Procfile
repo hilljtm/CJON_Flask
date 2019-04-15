@@ -1,0 +1,1 @@
+web: gunicorn -t 5 --bind 0.0.0.0:SPORT --worker-class gevent app:app
