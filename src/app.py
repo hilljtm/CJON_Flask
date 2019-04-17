@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from .config import app_config
 from .models import bcrypt, db
 from .models import user
@@ -10,6 +11,7 @@ def create_app(env_name):
     Create Application
     '''
     app = Flask(__name__)
+    CORS(app)
     config_name = os.getenv('FLASK_ENV')
     app.config.from_object(app_config[config_name])
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
